@@ -2,6 +2,7 @@ package controller
 
 import (
 	"aws_make_api_key/domain"
+	"fmt"
 	"github.com/ignacio-magno/database/dynamo"
 	"os"
 )
@@ -21,4 +22,17 @@ func (p *Persistance) Save(emailPersistance domain.EmailPersistance) error {
 func (p *Persistance) Get(email string) (domain.EmailPersistance, error) {
 	doc, err := p.repo.FindOne([]interface{}{"email"})
 	return doc, err
+}
+
+func (p *Persistance) Exist(email string) bool {
+	doc, err := p.repo.FindOne([]interface{}{"email"})
+	if err == fmt.Errorf("not found") {
+		return false
+	}
+
+	if err != nil {
+		panic(err)
+	}
+
+	return doc.Email == email
 }
