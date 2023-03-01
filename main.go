@@ -33,10 +33,14 @@ func Handler(e events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, e
 	}
 
 	// notify by sns
-	_ = apiKey
+	controllerSns := controller.NewSes()
+	err = controllerSns.NotifyByEmail(payload.Email, *apiKey.Value)
+	if err != nil {
+		return returnError(err)
+	}
 
 	return events.APIGatewayProxyResponse{
-		Body:       "Hello, World!",
+		Body:       "ok",
 		StatusCode: 200,
 	}, nil
 }
