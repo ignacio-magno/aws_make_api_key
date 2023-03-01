@@ -4,6 +4,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/apigateway"
+	"log"
 	"os"
 )
 
@@ -24,12 +25,14 @@ func NewApiKeyGenerator() ApiKeyGenerator {
 
 func (a *ApiKeyGenerator) Generate(email string) (*apigateway.ApiKey, error) {
 	// create api key with usage plan
+	log.Default().Println("creating api key")
 	key, err := a.createApiKey(email)
 	if err != nil {
 		return nil, err
 	}
 
 	// assign api key to usage plan
+	log.Default().Println("assigning api key to usage plan")
 	err = a.assignToUsagePlan(err, key)
 	if err != nil {
 		return nil, err

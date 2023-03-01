@@ -20,19 +20,23 @@ func (p *Persistance) Save(emailPersistance domain.EmailPersistance) error {
 }
 
 func (p *Persistance) Get(email string) (domain.EmailPersistance, error) {
-	doc, err := p.repo.FindOne([]interface{}{"email"})
+	doc, err := p.repo.FindOne([]interface{}{email})
 	return doc, err
 }
 
 func (p *Persistance) Exist(email string) bool {
-	doc, err := p.repo.FindOne([]interface{}{"email"})
-	if err == fmt.Errorf("not found") {
-		return false
+	doc, err := p.repo.FindOne([]interface{}{email})
+	if err != nil {
+		if err.Error() == "not found" {
+			return false
+		} else {
+			if err != nil {
+				panic(err)
+			}
+		}
 	}
 
-	if err != nil {
-		panic(err)
-	}
+	fmt.Println(doc.Email)
 
 	return doc.Email == email
 }

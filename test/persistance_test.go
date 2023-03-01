@@ -17,3 +17,10 @@ func TestPingDatabase(t *testing.T) {
 
 	assert.NoError(t, err)
 }
+
+func TestExist(t *testing.T) {
+	cp := controller.NewPersistance()
+	exist := cp.Exist("this is testing email")
+
+	assert.True(t, exist)
+}
