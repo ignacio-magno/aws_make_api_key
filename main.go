@@ -12,6 +12,8 @@ func Handler(e events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, e
 		return returnError(err)
 	}
 
+	_ = payload
+
 	return events.APIGatewayProxyResponse{
 		Body:       "Hello, World!",
 		StatusCode: 200,

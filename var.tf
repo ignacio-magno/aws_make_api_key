@@ -1,0 +1,3 @@
+variable "DynamoDBTable" {
+  type = string
+}

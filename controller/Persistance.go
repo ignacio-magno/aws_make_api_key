@@ -11,9 +11,14 @@ type Persistance struct {
 }
 
 func NewPersistance() *Persistance {
-	return &Persistance{repo: dynamo.NewRepositoryDynamo[domain.EmailPersistance](os.Getenv("TABLE_NAME"), false)}
+	return &Persistance{repo: dynamo.NewRepositoryDynamo[domain.EmailPersistance](os.Getenv("DynamoDBTable"), false)}
 }
 
-func () Save(emailPersistance domain.EmailPersistance) error {
-	return p.repo.Save(emailPersistance)
+func (p *Persistance) Save(emailPersistance domain.EmailPersistance) error {
+	return p.repo.SaveOrReplace(emailPersistance)
+}
+
+func (p *Persistance) Get(email string) (domain.EmailPersistance, error) {
+	doc, err := p.repo.FindOne([]interface{}{"email"})
+	return doc, err
 }
