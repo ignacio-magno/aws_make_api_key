@@ -47,6 +47,10 @@ func Handler(e events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, e
 	return events.APIGatewayProxyResponse{
 		Body:       "ok",
 		StatusCode: 200,
+		// set header to cors
+		Headers: map[string]string{
+			"Access-Control-Allow-Origin": "*",
+		},
 	}, nil
 }
 
@@ -54,6 +58,9 @@ func returnError(err error) (events.APIGatewayProxyResponse, error) {
 	return events.APIGatewayProxyResponse{
 		Body:       err.Error(),
 		StatusCode: 400,
+		Headers: map[string]string{
+			"Access-Control-Allow-Origin": "*",
+		},
 	}, nil
 }
 

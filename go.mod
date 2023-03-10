@@ -5,7 +5,6 @@ go 1.20
 require (
 	github.com/aws/aws-lambda-go v1.37.0
 	github.com/aws/aws-sdk-go v1.44.211
-	github.com/aws/aws-sdk-go-v2/service/ses v1.15.3
 	github.com/badoux/checkmail v1.2.1
 	github.com/ignacio-magno/database v0.0.0-20230301000729-75b93d81ebf4
 	github.com/stretchr/testify v1.7.2
